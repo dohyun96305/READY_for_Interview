@@ -1,5 +1,4 @@
-
-# Contents of Statistics
+# #Contents_of_Statistics
 * [신뢰구간, p 값의 의미 - #1](#1)
 * [중심극한정리의 의미 - #2](#2)
   
@@ -38,10 +37,14 @@
 
 <br>
 
-
 ***REF***
 - [공돌이의 수학정리노트 - 신뢰구간의 의미](https://angeloyeo.github.io/2021/01/05/confidence_interval.html)
 - [공부하는 떡볶이 - 신회구간과 신뢰수준](https://ddukbbok-kang.tistory.com/84)
+
+</br>
+
+[BACK TO HEAD](#Contents_of_Statistics)
+
 ---
 
 ## #2
@@ -52,11 +55,11 @@
   
 - $[X_1, \ldots, X_n]$ 을 평균 $\mu$, 분산 $\sigma^2$인 분포에서 추출한 확률표본의 집합이라고 할 때, 
   
-  $$E(\bar{X_n}) = E(\frac{1}{n}(X_1 + \ldots + X_n)) = \frac{1}{n}(E(X_1) + \ldots + E(X_n)) = \frac{1}{n} * (n * \mu) = \mu$$
+  - $$E(\bar{X_n}) = E(\frac{1}{n}(X_1 + \ldots + X_n)) = \frac{1}{n}(E(X_1) + \ldots + E(X_n)) = \frac{1}{n} * (n * \mu) = \mu$$
 
-  $$Var(\bar{X_n}) = Var(\frac{1}{n}(X_1 + \ldots + X_n)) = \frac{1}{n^2}(Var(X_1) + \ldots + Var(X_n)) = \frac{1}{n^2} * (n*\sigma^2) = \frac{\sigma^2}{n}$$
+  - $$Var(\bar{X_n}) = Var(\frac{1}{n}(X_1 + \ldots + X_n)) = \frac{1}{n^2}(Var(X_1) + \ldots + Var(X_n)) = \frac{1}{n^2} * (n*\sigma^2) = \frac{\sigma^2}{n}$$
 
-  $$Y = \frac{\sqrt{n}(\bar{X} - \mu) }{\sigma} = \frac {\sum (X_i - n \mu) }{\sigma\sqrt{n}} \sim N(0, 1)$$ 
+  - $$Y = \frac{\sqrt{n}(\bar{X} - \mu) }{\sigma} = \frac {\sum (X_i - n \mu) }{\sigma\sqrt{n}} \sim N(0, 1)$$ 
 
   
 - 모집단 $X_j$에 대해 추가적인 정보 없이 평균 $\mu$와 분산 $\sigma^2$만 정의된다면 </br> 
@@ -70,5 +73,10 @@
 - [중심극한정리와 정규성검증](https://speedspeed.tistory.com/202#google_vignette)
 - [수리통계 - 중심극한정리](https://www.goteodata.kr/77)
 - [중심 극한 정리(CLT)](https://gguguk.github.io/posts/CLT/)
+
+</br>
+
+[BACK TO HEAD](#Contents_of_Statistics)
+
 --- 
 
