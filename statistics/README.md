@@ -1,11 +1,12 @@
 
 # Contents of Statistics
-* [신뢰구간, p 값의 의미](#1)
+* [신뢰구간, p 값의 의미 - #1](#1)
+* [중심극한정리의 의미 - #2](#2)
   
 ---
 
 ## #1 
-### **신뢰구간과** p 값의 의미 
+### 신뢰구간과 p 값의 의미 
 
 - **모수 (Parameter)**
   - 평균, 분산과 같이 모집단의 특성을 보여주는 고정된 값 
@@ -38,8 +39,36 @@
 <br>
 
 
-**REF**
+***REF***
 - [공돌이의 수학정리노트 - 신뢰구간의 의미](https://angeloyeo.github.io/2021/01/05/confidence_interval.html)
 - [공부하는 떡볶이 - 신회구간과 신뢰수준](https://ddukbbok-kang.tistory.com/84)
-
 ---
+
+## #2
+### 중심극한정리 (Central Limit Theorem)
+- 동일한 확률분포를 가진 **'독립' 확률 변수 n개의 평균의 분포**는 n이 적당히 크다면 정규분포에 가까워진다는 정리
+  - 일반적으로 표본의 크기가 30 이상일 때, 중심극한정리가 적용된다고 할 수 있음
+  
+  
+- $[X_1, \ldots, X_n]$ 을 평균 $\mu$, 분산 $\sigma^2$인 분포에서 추출한 확률표본의 집합이라고 할 때, 
+  
+  $$E(\bar{X_n}) = E(\frac{1}{n}(X_1 + \ldots + X_n)) = \frac{1}{n}(E(X_1) + \ldots + E(X_n)) = \frac{1}{n} * (n * \mu) = \mu$$
+
+  $$Var(\bar{X_n}) = Var(\frac{1}{n}(X_1 + \ldots + X_n)) = \frac{1}{n^2}(Var(X_1) + \ldots + Var(X_n)) = \frac{1}{n^2} * (n*\sigma^2) = \frac{\sigma^2}{n}$$
+
+  $$Y = \frac{\sqrt{n}(\bar{X} - \mu) }{\sigma} = \frac {\sum (X_i - n \mu) }{\sigma\sqrt{n}} \sim N(0, 1)$$ 
+
+  
+- 모집단 $X_j$에 대해 추가적인 정보 없이 평균 $\mu$와 분산 $\sigma^2$만 정의된다면 </br> 
+  => 중심극한정리를 통해 **표본평균의 분포가 평균 $\mu$와 분산 $\frac{\sigma^2}{\sqrt{n}}$d인 정규분포에 근사한다**는 것을 알 수 있음 </br>
+  => **표본 통계량을 통해 모수를 추정**할 수 있는 수학적 근거를 제시함
+
+<br>
+
+***REF***
+- [중심 극한 정리](https://ko.wikipedia.org/wiki/%EC%A4%91%EC%8B%AC_%EA%B7%B9%ED%95%9C_%EC%A0%95%EB%A6%AC)
+- [중심극한정리와 정규성검증](https://speedspeed.tistory.com/202#google_vignette)
+- [수리통계 - 중심극한정리](https://www.goteodata.kr/77)
+- [중심 극한 정리(CLT)](https://gguguk.github.io/posts/CLT/)
+--- 
+

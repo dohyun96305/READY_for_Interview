@@ -1,10 +1,10 @@
 
 # Contents of Database
-* [Database Key의 의미와 종류](#1)
-  * [기본 키 수정 가능 여부](#1-1)
-  * [MySQL에서 기본 키 없이도 테이블을 만들 수 있는 이유](#1-2)
-  * [외래 키 NULL 값 가능 여부](#1-3)
-  * [UNIQUE 키워드에 따른 쿼리 성능의 차이](#1-4)
+* [Database Key의 의미와 종류 - #1](#1)
+  * [기본 키 수정 가능 여부 - #1-1](#1-1)
+  * [MySQL에서 기본 키 없이도 테이블을 만들 수 있는 이유 - #1-2](#1-2)
+  * [외래 키 NULL 값 가능 여부 - #1-3](#1-3)
+  * [UNIQUE 키워드에 따른 쿼리 성능의 차이 - #1-4](#1-4)
   
 ---
 
@@ -20,20 +20,14 @@
 
     * 데이터 정합성 : 데이터가 올바르게, 일관성 있게 유지되는 것을 의미
 
-<br>
-
 1. **슈퍼 키 (Super Key)**
    * '유일성'의 특성을 만족하는 속성 또는 속성들의 집합
-
-<br>
 
 2. **후보 키 (Candidate Key)**
    * '유일성'과 '최소성'을 만족하는 속성 및 속성들의 집합
 
    * 슈퍼 키 중 '최소성'을 만족하는 것이 후보 키
 
-<br>
-  
 3. **기본 키 (Primary Key)**
    * 테이블에서 특정 행을 고유하게 식별할 수 있는 하나의 속성 또는 속성의 집합
 
@@ -43,26 +37,18 @@
 
    * 모든 행에 대해 유일하고 NULL 값을 포함하지 않아야 함
      
-<br>
-
 4. **대체 키 (Alternate Key)**
    * 기본 키로 선택되지 못한 후보 키
   
-<br>
- 
 5. **복합 키 (Composite Key)**
    * 두 개 이상의 속성으로 구성된 키
 
    * 데이터 중복을 방지하고 무결성을 유지
 
-<br>
-
 6. **외래 키 (Foreign Key)**
    * 어떤 테이블에 소속된 속성 또는 속성 집합이 다른 테이블의 기본 키가 되는 키
 
    * 테이블 간 관계를 표현하기 위해 필요 
-
-<br>
 
 7. **유니크 키 (Unique Key)**
    * 특정 속성 또는 속성의 집합에 대해 유일성을 강제하는 제약조건 
@@ -75,12 +61,12 @@
 
 <br>
 
-**REF**
+***REF***
 - [[DB] 관계형 데이터베이스 키(key) 이해하기](https://adjh54.tistory.com/245)
 - [[데이터베이스/DB] 4. 관계형 데이터베이스의 키(key)의 종류](https://ddecode.tistory.com/entry/%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4DB-4%EA%B4%80%EA%B3%84%ED%98%95-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4%EC%9D%98-%ED%82%A4key%EC%9D%98-%EC%A2%85%EB%A5%98)
 - [[데이터베이스] Key의 종류와 역할](https://velog.io/@yoonuk/DB-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4%EC%97%90%EC%84%9C-Key%EC%9D%98-%EC%A2%85%EB%A5%98%EC%99%80-%EC%97%AD%ED%95%A0)
-
 --- 
+
 ## #1-1
 ### 기본 키 수정 가능 여부 => 조건에 따라 가능은 함
   1. 수정하고자 하는 값을 가진 기본 키가 없는 경우
@@ -122,10 +108,16 @@
 - [stackoverflow](https://stackoverflow.com/questions/3838414/can-we-update-primary-key-values-of-a-table)
 - [[DB] PK는 수정이 가능할까?](https://m42-orion.tistory.com/174)
 ---
+
 ## #1-2
 ### MySQL에서 기본 키 없이도 테이블을 만들 수 있는 이유
 
+</br>
+
+***REF***
+
 ---
+
 ## #1-3
 ### 외래 키 NULL 값 가능 여부 => 가능 
   * 참조 무결성 제약 조건 
@@ -146,6 +138,7 @@
 - [외래 키 (Foreign Key)](https://ruhaharu1107.tistory.com/24)
 - [MySQL ON delte, cascade, set null에 대해](https://swkn.tistory.com/89ㄴ)
 ---
+
 ## #1-4
 ### UNIQUE 키워드에 따른 쿼리 성능의 차이
   * UNIQUE 키워드가 설정된 칼럼은 해당 값들이 중복되지 않도록 보장됨
@@ -164,10 +157,9 @@
     * 많은 데이터가 입력된 이후 UNIQUE Index 지정간 Index 구성에 많은 시간이 걸림 => 성능 저하
   *  불필요한 Index 설정은 DB 메모리의 남용으로 인한 성능 저하가 발생할 수 있음
 
-
-
 <br>
 
-***REF**
+***REF***
 - [Unique 제약조건과 조회시 성능상의 이점](https://velog.io/@jurlring/Unique-%EC%A0%9C%EC%95%BD%EC%A1%B0%EA%B1%B4%EA%B3%BC-%EC%A1%B0%ED%9A%8C%EC%8B%9C-%EC%84%B1%EB%8A%A5%EC%83%81%EC%9D%98-%EC%9D%B4%EC%A0%90)
 - [[MySQL] 인덱스(Index)란?](https://s-y-130.tistory.com/107)
+--- 
