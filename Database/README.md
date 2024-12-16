@@ -4,6 +4,7 @@
   * [MySQL에서 기본 키 없이도 테이블을 만들 수 있는 이유 - #1-2](#1-2)
   * [외래 키 NULL 값 가능 여부 - #1-3](#1-3)
   * [UNIQUE 키워드에 따른 쿼리 성능의 차이 - #1-4](#1-4)
+* [Database Index Scan 방식의 종류 - #2](#2)
   
 ---
 
@@ -186,3 +187,43 @@
 [BACK TO HEAD](#Contents_of_Database)
 
 --- 
+
+## #2
+### Database Index Scan 방식의 종류
+* **Full Table Scan**
+  * Index를 사용하지 않고 테이블의 모든 행을 검색하는 방식
+  * WHERE 조건문을 기준으로 활용할 Index가 없는 경우 
+  * 전체 데이터 대비 대량의 데이터가 필요한 경우 (20~25%)
+
+</br>
+
+* **Index Full Scan**
+  * Index의 모든 값을 순차적으로 읽어오는 방식 
+    * Index로 구성된 컬럼만 요구하는 쿼리일 경우 사용
+* **Index Range Scan**
+  * Index 내 특정 범위의 값을 검색할 때 사용하는 방식
+    * 조건절에 비교연산자와 같은 범위 조건이 포함될 때 사용
+* **Index Unique Scan**
+  * Primary Key 혹은 Unique Index를 사용해 특정 행을 검색할 때 사용하는 방식
+    * 조건문에서의 '=' 조건으로 검색할 때 사용
+    * 유일한 Index가 적용된 컬럼에 대해 특정 값을 조회할 때 사용
+* **Index Skip Scan**
+  * 선행 데이터가 없는 경우 후행 데이터를 이용해서 검색하는 방식 ( GROUP BY, MIN(), MAX() 등 사용 )
+    * 조건에 맞는 블록만 탐색하는 방식으로 조건에 맞지 않는 경우 Skip 진행
+* **Index Merge Scan**
+  * 테이블 내 Index들을 통합해서 검색하는 방식 
+    * 조건문에서의 'OR' 조건으로 검색할 때 사용
+
+</br>
+
+***REF***
+- [mysql index scan 정리](https://velog.io/@greentea/mysql-index-scan-%EC%A0%95%EB%A6%AC)
+- [MySql 오브젝트 스캔 유형](https://hssm93.tistory.com/entry/%EC%9A%A9%EC%96%B4-mysql-%EC%98%A4%EB%B8%8C%EC%A0%9D%ED%8A%B8-%EC%8A%A4%EC%BA%94-%EC%9C%A0%ED%98%95)
+- [MSSQL 인덱스(INDEX) 스캔 원리 및 방법](https://aurumguide.tistory.com/72) 
+- [MySQL 인텍스 스킵 스캔 (Index Skip Scan)](https://mentha2.tistory.com/289)
+
+</br>
+
+[BACK TO HEAD](#Contents_of_Database)
+
+---
