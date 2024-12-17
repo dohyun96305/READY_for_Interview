@@ -1,7 +1,7 @@
 # #Contents_of_Statistics
 * [신뢰구간, p 값의 의미 - #1](#1)
 * [중심극한정리의 의미 - #2](#2)
-  
+* [샘플링 (Sampling), 리샘플링 (Resampling)의 의미 - #3](#3)
 ---
 
 ## #1 
@@ -79,4 +79,58 @@
 [BACK TO HEAD](#Contents_of_Statistics)
 
 --- 
+
+## #3
+### 샘플링 (Sampling), 리샘플링 (Resampling)의 의미 
+- **샘플링 (Sampling)**
+  - 전체 데이터 집단 (**모집단**)에서 임의의 데이터를 일부 추출 (**표본 집단**)
+  - 모집단 전체에 대한 조사가 사실상 불가능하기 때문에 샘플링을 이용 </br>
+    => 표본 집단에 대한 조사를 통해 모집단에 대한 추론을 진행 
+  - 선택 편향과 샘플링 오류와 같이 오류가 발생할 수 있음 </br>
+    => 추론한 모집단의 특성에 필연적으로 영향을 끼친다
+  
+  - 종류 
+    - **단순 무작위 추출 (Simple Random Sampling)**
+      - 모집단의 모든 데이터를 동등한 확률을 통해 표본 추출 
+      - 가장 단순한 표본 추출 방법
+    
+    - **층화 임의 추출 (Stratified Random Sampling)**
+      - 전체 모집단을 몇 개의 특징을 기준으로 계층으로 나눈 뒤, 각 계층에서 독립적으로 표본을 추출
+      - 계층 간 이질적, 계층 내 동질적 
+    
+    - **군집 추출 (Clustering Sampling)**
+    - 전체 모집단을 모집단과 유사한 특성을 가진 여러 개의 군집으로 나눈 뒤, 선정된 군집에서 표본을 추출 
+    - 군집 간 동질적, 군집 내 이질적 특성을 가짐
+  - 
+    - **계통 추출 (Systematic Sampling)**
+      - 추출 간격을 정해 각 순서에 위치한 단위들을 표본으로 추출 
+      - 난수 발생을 통해 단순 무작위 추출을 적용하기 어려운 상황에서 활용 
+
+</br>
+  
+- **리샘플링 (Resampling)**
+  - 기존의 샘플링한 표본 집단을에서 새로운 표본 집단을 다시 샘플링하는 과정 
+
+  - 종류
+    - **교차검증 (Cross-Validation)**
+      - 모델 학습시 데이터를 훈련용, 검증용으로 교차하여 선택하여 학습을 진행
+        - LpOCV (Leave_P_Out_CV), LOOCV (Leave_One_Out_CV)
+        - K-Fold CV
+        - Bias-Variance Trade-off for 
+    - **Bootstrap**
+      - 모집단에서 독립적인 데이터셋을 반복해 얻는 대신 원래의 데이터셋으로부터 중복을 허용해 관측치를 반복적으로 추출 
+
+</br>
+
+***REF***
+- [샘플링(Sampling) 과 리샘플링(Resampling)](https://ploradoaa.tistory.com/81)
+- [갈아먹는 통계 기초[3] - 표본 추출](https://blog.firstpenguine.school/35)
+- [머신러닝 ISL 05 : Resampling Methods](https://m.blog.naver.com/parksoungpark/223054214575)
+- [[머신러닝] 교차검증(Cross-validation) 필요성 및 장단점](https://heytech.tistory.com/113)
+
+</br>
+
+[BACK TO HEAD](#Contents_of_Statistics)
+
+---
 
