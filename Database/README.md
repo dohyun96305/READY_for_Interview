@@ -5,6 +5,7 @@
   * [외래 키 NULL 값 가능 여부 - #1-3](#1-3)
   * [UNIQUE 키워드에 따른 쿼리 성능의 차이 - #1-4](#1-4)
 * [Database Index Scan 방식의 종류 - #2](#2)
+* [정규화의 의미 - #3](#3)
   
 ---
 
@@ -221,6 +222,70 @@
 - [MySql 오브젝트 스캔 유형](https://hssm93.tistory.com/entry/%EC%9A%A9%EC%96%B4-mysql-%EC%98%A4%EB%B8%8C%EC%A0%9D%ED%8A%B8-%EC%8A%A4%EC%BA%94-%EC%9C%A0%ED%98%95)
 - [MSSQL 인덱스(INDEX) 스캔 원리 및 방법](https://aurumguide.tistory.com/72) 
 - [MySQL 인텍스 스킵 스캔 (Index Skip Scan)](https://mentha2.tistory.com/289)
+
+</br>
+
+[BACK TO HEAD](#Contents_of_Database)
+
+---
+
+## #3
+### 정규화의 의미 
+* 관계형 데이터베이스 설계에서 데이터 중복을 줄이고 데이터 무결성을 개선하기 위해 데이터를 정규형에 맞도록 구조화하는 프로세스
+* 이상 현상이 있는 릴레이션을 분해해 이상 현상을 없애는 과정 
+  * 이상 현상 
+    * 데이터간 중복이 있어 데이터 변경 (삽입, 삭제, 수정) 간 발생하는 오류 
+      * 삽입 이상 : 데이터 삽입 간 불필요한 데이터까지 삽입
+      * 삭제 이상 : 데이터 삭제 간 유용한 데이터 삭제
+      * 갱신 이상 : 중복된 데이터 중 일부만 수정되어 데이터 불일치 발생 
+  
+  * 함수 종속성 
+    * 어떤 속성 A의 값을 알면 다른 속성 B의 값이 유일하게 정해지는 관계 
+    * A -> B로 표기, A는 B의 결정자 (Determinant)
+      * A는 B를 결정한다. (Determine)
+      * B는 A에 종속한다. (Dependent)
+
+* **정규화의 장점**
+  * 데이터베이스 변경 시 이상 현상 (Anomaly)을 제거할 수 있다.
+  * 정규화된 데이터베이스 구조에서 새로운 데이터 형의 추가로 인한 확장 시 용이하다.
+  * 데이터베이스와 연동된 응용 프로그램에 최소한의 영향을 끼친다.
+
+* **정규화의 단점**
+  * 릴레이션의 분해로 릴레이션 간의 JOIN 연산이 많아진다.
+  * 질의에 대한 응답시간이 느려질 수 있다.
+
+</br> 
+
+### **정규형 (Normal Form)**
+  * **제 1 정규형** 
+    * "각 컬럼이 원자 값 (더이상 분리되지 않는 값) 으로만 구성되어야 한다."
+      * 각 컬럼이 하나만의 속성만을 가져야 한다.
+      * 하나의 칼럼은 같은 종류나 속성 (Type) 을 가져야 한다.
+      * 각 칼럼은 유일한 (Unique) 이름을 가져야 한다.
+      * 칼럼의 순서가 상관없어야 한다.
+  
+  * **제 2 정규형**
+    * 제 1 정규형을 만족
+    * "모든 칼럼이 부분적 종속 (Partial Dependency) 가 없어야 한다." => 모든 칼럼이 완전 함수 종속을 만족해야 한다.
+      * 기본키의 부분집합이 결정자가 되어선 안된다.
+  
+  * **제 3 정규형**
+    * 제 2 정규형을 만족
+    * "기본키를 제외한 속성들 간 이행 종속성 (Transitive Dependency) 가 없어야 한다."
+      * 이행 종속성 : A -> B, B -> C일 때 A -> C가 성립되면 이행 종속 관계
+  
+  * **BCNF (Boyce-Codd Normal Form)**
+    * 제 3 정규형을 만족
+    * "모든 결정자가 후보키 집합에 속해야 한다."
+      * 후보키 집합에 없는 칼럼이 결정자가 되어서는 안된다.
+  
+</br>
+
+***REF***
+- [데이터베이스 정규화](https://ko.wikipedia.org/wiki/%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4_%EC%A0%95%EA%B7%9C%ED%99%94)
+- [이상(Anomaly)과 정규화(Normalization)](https://bactoria.tistory.com/entry/%EC%9D%B4%EC%83%81Anomaly%EA%B3%BC-%EC%A0%95%EA%B7%9C%ED%99%94Normalization)
+- [[DB] 정규화란? (Normalization), 정규화 예시](https://code-lab1.com/%EC%A0%95%EA%B7%9C%ED%99%94/)
+- [[DB] 이상현상(Anomaly), 함수 종속성(Functional Dependency)란?](https://code-lab1.com/%ec%9d%b4%ec%83%81%ed%98%84%ec%83%81/)
 
 </br>
 
