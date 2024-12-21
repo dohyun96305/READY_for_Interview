@@ -2,6 +2,7 @@
 * [신뢰구간, p 값의 의미 - #1](#1)
 * [중심극한정리의 의미 - #2](#2)
 * [샘플링 (Sampling), 리샘플링 (Resampling)의 의미 - #3](#3)
+* [가능도 (Likelihiood), 확률 (Probability)의 의미 - #4](#4)
 ---
 
 ## #1 
@@ -134,3 +135,41 @@
 
 ---
 
+## #4
+### 가능도 (Likelihiood), 확률 (Probability)
+
+- **확률 (Probability)**
+  - 특정 결과가 발생할 가능성 혹은 기회
+  - 모델 매개변수에 따라 예측한 특정 결과의 발생 가능성을 의미 
+  - '주어진 확률분포가 고정된 상태'에서 관측되는 사건이 변화될 때의 확률
+  
+- **가능도 (Likelihood)**
+  - 모델이나 가설이 관찰된 데이터에 얼마나 잘 맞는지를 나타내는 정량적 추정 또는 측정 
+  - 특정 매개변수 집합에서 원하는 결과나 데이터 수집을 찾을 확률 
+  - '관측된 사건이 고정된 상태'에서 확률분포가 변화할 때의 확률 
+  
+  - **최대우도법 (Maximum Likelihood Estimation)**
+    - 관측된 데이터들을 가장 잘 표현할 수 있는 확률분포의 매개변수를 찾는 알고리즘 
+
+</br>
+
+- $L(\theta | x) = P(x | \theta) = p_\theta(x) = P_\theta(X = x)$
+  
+  - $x$ : 관측값, $\theta$ : 모수 (Parameter), 요약통계량 
+  
+  - **$L(\theta | x)$** : 관측값이 주어졌을 때, 변화되는 확률 분포에서 주어진 관측값이 나올 확률
+  - **$P(x | \theta)$** : 확률분포가 주어졌을 떄, 변화되는 관측값이 나올 확률 
+
+</br>
+
+***REF***
+- [[개념정리] Likelihood와 Probability](https://xoft.tistory.com/30)
+- [확률 (probability)과 가능도(likelihodd) 그리고 최대우도추정 (likelihood maximization)](https://jjangjjong.tistory.com/41)
+- [Probability Model (확률 모형) 및 likelihood 개념 학습](https://gaussian37.github.io/ml-concept-probability_model/)
+- [Youtube - statQuest : Maximum Likelihood](https://www.youtube.com/watch?v=XepXtl9YKwc)
+
+</br>
+
+[BACK TO HEAD](#Contents_of_Statistics)
+
+---
