@@ -163,7 +163,7 @@
 ## #1-4
 ### UNIQUE 키워드에 따른 쿼리 성능의 차이
   * UNIQUE 키워드가 설정된 칼럼은 해당 값들이 중복되지 않도록 보장됨
-    * **UNIQUE Index**생성
+    * UNIQUE Index 생성
     * Index => Read가 빠르지만 CREATE, UPDATE, DELETE가 느림 
 
   * 일반적인 Index와 UNIQUE Index는 구조적인 차이가 없어 성능 상 차이가 거의 없음 
@@ -316,6 +316,8 @@
 * **루트 노드 (Root Node)** : 가장 상단의 노드
 * **브랜치 노드 (Branch Node)** : 중간 노드 
 * **리프 노드 (Leaf Node)** : 가장 아래의 노드 
+
+</br>
 
 ### B-Tree
   * 이진 탐색 트리를 발전시킨 자료구조 
