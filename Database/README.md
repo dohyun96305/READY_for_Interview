@@ -6,6 +6,7 @@
   * [UNIQUE 키워드에 따른 쿼리 성능의 차이 - #1-4](#1-4)
 * [Database Index Scan 방식의 종류 - #2](#2)
 * [정규화의 의미 - #3](#3)
+* [B-tree, B+tree - #4](#4)
   
 ---
 
@@ -286,6 +287,75 @@
 - [이상(Anomaly)과 정규화(Normalization)](https://bactoria.tistory.com/entry/%EC%9D%B4%EC%83%81Anomaly%EA%B3%BC-%EC%A0%95%EA%B7%9C%ED%99%94Normalization)
 - [[DB] 정규화란? (Normalization), 정규화 예시](https://code-lab1.com/%EC%A0%95%EA%B7%9C%ED%99%94/)
 - [[DB] 이상현상(Anomaly), 함수 종속성(Functional Dependency)란?](https://code-lab1.com/%ec%9d%b4%ec%83%81%ed%98%84%ec%83%81/)
+
+</br>
+
+[BACK TO HEAD](#Contents_of_Database)
+
+---
+
+## #4
+### B-Tree, B+Tree 
+
+### **이진 탐색 트리 (Binary Search Tree)**
+  * 자식을 두개 가질 수 있는 노드들로 구성되는 트리 형태의 자료구조 
+    * 각 노드의 값은 유일하며 중복된 값은 허용되지 않음
+    * 각 노드의 왼쪽 서브 트리에는 자신보다 작은 값들이 배치 
+    * 각 노드의 오른쪽 서브 트리에는 자신보다 큰 값들이 배치 
+  
+  * **순회 방법** 
+    * **전위 순회 (Preorder Traversal)**
+      * 루트 노드를 먼저 방문한 후, 왼쪽 서브트리 방문 이후 오른쪽 서브트리를 방문
+    * **중위 순회 (Inorder Traversal)**
+      * 왼쪽 서브트리를 먼저 방문한 후, 루트 노드 방문 이후 오른쪽 서브트리를 방문
+    * **후위 순회 (Postorder Traversal)**
+      * 왼쪽 서브트리, 오른쪽 서브트리를 방문한 후, 루트 노드 방문 
+  
+</br>
+
+* **루트 노드 (Root Node)** : 가장 상단의 노드
+* **브랜치 노드 (Branch Node)** : 중간 노드 
+* **리프 노드 (Leaf Node)** : 가장 아래의 노드 
+
+### B-Tree
+  * 이진 탐색 트리를 발전시킨 자료구조 
+  * 2개 이상의 자식 노드를 가질 수 있는 자료구조 
+    * 부모 노드에 저장된 값이 N개 일 때 자식 노드는 최대 N+1개의 노드를 가질 수 있음
+      * Ex) 부모 노드 : $X_1, X_2, \ldots$ 에 대해 
+        * 자식 노드 :  $X_1$보다 작은 노드, $X_1$ 초과 $X_2$ 미만 노드, $\ldots$ , $X_n$ 보다 큰 노드 
+  * 관계형 DB Index에서 자주 사용되는 자료구조 
+
+</br>
+
+### B+Tree
+  * B-Tree 구조에서 검색 성능을 발전시킨 자료구조 
+  * 리프 노드간 '연결성'이 추가된 자료 구조 
+  * 범위 검색에 유용하다는 특징을 가짐  
+    * Ex) A 이상 B 이하의 범위를 찾아야하는 상황
+      * B-Tree
+        * 최상위 노드 => A 값 노드 위치 => 최상위 노드 => B 값 노드 위치 
+      * B+Tree
+        * 최상위 노드 => A 값 노드 위치 => B 값 노드 위치 
+
+</br>
+
+### B-Tree vs B+Tree
+  * B-Tree 
+    * '균일성' : 어떤 값에 대해서 같은 시간에 결과를 얻을 수 있음 
+    * 브랜치 노드 및 리프 노드에 주소값 및 데이터가 저장되기 떄문에 메모리 효율성이 낮음
+  * B+Tree
+    * 리프 노드에만 데이터가 저장되기 때문에 메모리 효율이 상대적으로  좋음
+    * 리프 노드에 '연결성'을 나타내는 데이터가 추가적으로 관리되어야 함 
+      * => 데이터 생성 및 수정 삭제가 일어날 때 성능이 비효율적임.
+      * 
+</br>
+
+***REF***
+- [[Algorithm] 이진 탐색 트리 (Binary Search Tree, BST) + 전위 중위 후위 순회](https://kangworld.tistory.com/51)
+- [[MySQL] Index의 구조 : B-Tree, B+Tree](https://velog.io/@juhyeon1114/MySQL-Index%EC%9D%98-%EA%B5%AC%EC%A1%B0-B-Tree-BTree)
+- [이진탐색트리(Binary Search Tree)의 핵심](https://jh2021.tistory.com/34)
+- [[MySQL] B-tree, B+tree란? (인덱스와 연관지어서)](https://zorba91.tistory.com/293)
+- [[DB] 인덱스에서 B+Tree를 사용하는 이유](https://munak.tistory.com/182)
 
 </br>
 
