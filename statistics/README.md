@@ -3,6 +3,7 @@
 * [중심극한정리의 의미 - #2](#2)
 * [샘플링 (Sampling), 리샘플링 (Resampling)의 의미 - #3](#3)
 * [가능도 (Likelihiood), 확률 (Probability)의 의미 - #4](#4)
+* [고유값 (Eigen value), 고유벡터 (Eigen Vector) - #5](#5)
 ---
 
 ## #1 
@@ -168,6 +169,69 @@
 - [Probability Model (확률 모형) 및 likelihood 개념 학습](https://gaussian37.github.io/ml-concept-probability_model/)
 - [Youtube - statQuest : Maximum Likelihood](https://www.youtube.com/watch?v=XepXtl9YKwc)
 
+</br>
+
+[BACK TO HEAD](#Contents_of_Statistics)
+
+---
+
+## #5
+### 고유값 (Eigen value), 고유벡터 (Eigen Vector)
+
+- **고유벡터 (Eigen Vector)**
+  - 선형 변환이 일어난 후에도 방향이 변하지 않는 0이 아닌 벡터
+
+- **고유값 (Eigen value)**
+  - 고유벡터의 길이가 변하는 고유벡터에 대응하는 값
+
+- **고유공간 (Eigen Space)**
+  - 고유값 $\lambda$의 고유공간은 그 고유벡터들과 0으로 구성되는 부분 벡터 공간 
+  - 고유공간 $V_{\lambda} = \{v \in V: Tv = \lambda v\}$
+
+- **고유기저 (Eigen Basis)** 
+  - 선형 변환 $T$의 고유벡터들로 구성된 $V$의 기저
+    - 기저 : 벡터공간 $V$을 선형 생성하는 선형 독립을 만족하는 벡터들 
+
+</br>
+
+### ***  벡터 공간 $V$ 위의 선형 변환 $T : V \rightarrow V$가 주어졌을 때, 
+- 어떤 $v \in V$, $\lambda \in K$가 $v \neq 0$, $Tv = \lambda v$를 만족한다면 
+  - => $v$를 $T$의 '**고유벡터**'
+  - => $\lambda$를 $T$에 대응하는 '**고유값**'
+
+</br>
+
+- **성질** 
+  - 선형 변환 $T : V \rightarrow V$ 에 대해 
+    - $\lambda$ 가 $T$의 고유값
+    - $\lambda I - T$가 특이 행렬
+      - 특이 행렬 : 역행렬을 가지지 않는 행렬
+    - $det(\lambda I - T) = 0$, 즉 $\lambda$가 고유 다항식의 근을 만족한다.
+
+- **활용 및 중요성**
+  - **주성분 분석 (PCA)**
+    - 데이터를 압축하는데 사용되는 일반적인 차원 축소 기술 
+      - '고유벡터' = 주성분 벡터 : 분산이 큰 방향
+      - '고유값' : 대응하는 분산의 크기 
+    - 활용 
+      - 차원 축소를 통한 시각화 및 기하학적 해석
+      - PCA를 통한 변수추출을 통한 선형 회귀에서의 다중공선성 문제 완화
+  
+  - **특이값 분해 (SVD)**
+    - 대각화를 통한 행렬 분해
+    - 활용
+      - 데이터 분해 및 근사를 통한 데이터 압축, 노이즈 제거등 활용
+  
+  #### => 주성분 분석 (PCA), 특이값 분해 (SVD) 정리 필요
+
+</br>
+
+***REF***
+- [고윳값과 고유 벡터](https://ko.wikipedia.org/wiki/%EA%B3%A0%EC%9C%B3%EA%B0%92%EA%B3%BC_%EA%B3%A0%EC%9C%A0_%EB%B2%A1%ED%84%B0)
+- [고유값(eigen value)과 고유벡터(eigen vector)](https://gguguk.github.io/posts/eigenvalue_eigenvector/)
+- [[선형대수학 #3] 고유값과 고유벡터 (eigenvalue & eigenvector)](https://darkpgmr.tistory.com/105)
+- [머신러닝에서 고유값의 활용](https://brunch.co.kr/@chris-song/104)
+  
 </br>
 
 [BACK TO HEAD](#Contents_of_Statistics)
