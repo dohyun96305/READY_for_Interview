@@ -7,7 +7,8 @@
 * [Database Index Scan 방식의 종류 - #2](#2)
 * [정규화의 의미 - #3](#3)
 * [B-tree, B+tree - #4](#4)
-  
+* [DB Locking - #5](#5)
+  * [Optimistic Lock / Pessimistic Lock - #5-1](#5-1)
 ---
 
 ## #1 
@@ -235,7 +236,7 @@
 * 관계형 데이터베이스 설계에서 데이터 중복을 줄이고 데이터 무결성을 개선하기 위해 데이터를 정규형에 맞도록 구조화하는 프로세스
 * 이상 현상이 있는 릴레이션을 분해해 이상 현상을 없애는 과정 
   * 이상 현상 
-    * 데이터간 중복이 있어 데이터 변경 (삽입, 삭제, 수정) 간 발생하는 오류 
+    * 데이터간 중복이 있어 데이터 변경 (삽입, 삭제, 수정)간 발생하는 오류 
       * 삽입 이상 : 데이터 삽입 간 불필요한 데이터까지 삽입
       * 삭제 이상 : 데이터 삭제 간 유용한 데이터 삭제
       * 갱신 이상 : 중복된 데이터 중 일부만 수정되어 데이터 불일치 발생 
@@ -259,20 +260,20 @@
 
 ### **정규형 (Normal Form)**
   * **제 1 정규형** 
-    * "각 컬럼이 원자 값 (더이상 분리되지 않는 값) 으로만 구성되어야 한다."
+    * "각 컬럼이 원자 값 (더이상 분리되지 않는 값)으로만 구성되어야 한다."
       * 각 컬럼이 하나만의 속성만을 가져야 한다.
-      * 하나의 칼럼은 같은 종류나 속성 (Type) 을 가져야 한다.
+      * 하나의 칼럼은 같은 종류나 속성 (Type)을 가져야 한다.
       * 각 칼럼은 유일한 (Unique) 이름을 가져야 한다.
       * 칼럼의 순서가 상관없어야 한다.
   
   * **제 2 정규형**
     * 제 1 정규형을 만족
-    * "모든 칼럼이 부분적 종속 (Partial Dependency) 가 없어야 한다." => 모든 칼럼이 완전 함수 종속을 만족해야 한다.
+    * "모든 칼럼이 부분적 종속 (Partial Dependency)가 없어야 한다." => 모든 칼럼이 완전 함수 종속을 만족해야 한다.
       * 기본키의 부분집합이 결정자가 되어선 안된다.
   
   * **제 3 정규형**
     * 제 2 정규형을 만족
-    * "기본키를 제외한 속성들 간 이행 종속성 (Transitive Dependency) 가 없어야 한다."
+    * "기본키를 제외한 속성들 간 이행 종속성 (Transitive Dependency)가 없어야 한다."
       * 이행 종속성 : A -> B, B -> C일 때 A -> C가 성립되면 이행 종속 관계
   
   * **BCNF (Boyce-Codd Normal Form)**
@@ -364,3 +365,137 @@
 [BACK TO HEAD](#Contents_of_Database)
 
 ---
+
+## #5
+### **DB Locking**
+  * 병행 트랜잭션이 가능한 환경에서 변경중인 Record를 다른 Transaction들이 접근하지 못하도록 막음 
+
+  * '데이터베이스 동시성' 및 '데이터 일관성' 보장
+    * 병행 트랜잭션 : 동시에 실행되고 있는 둘 이상의 트랜잭션
+
+</br>
+
+### **병행 트랜잭션의 동시성 문제** 
+  * **갱신 분실 (Lost Update)**
+    * 두 트랜잭션이 병렬로 같은 데이터를 읽고 갱신하는 과정에서 한 트랜잭션이 다른 트랜잭션의 갱신 값을 덮어쓰는 문제
+  
+  * **모순적 읽기 (Inconsistent Read)**
+    * 두 트랜잭션이 병렬로 같은 데이터를 읽고 갱신하는 과정에서 데이터 불일치가 발생하는 문제
+  
+  * **Dirty Read**
+    * 격리성 수준이 Read Uncommitted 이하인 환경에서 발생가능한 문제
+    * 한 트랜잭션이 다른 트랜잭션으로부터 커밋되지 않은 값을 읽어 발생하는 문제
+  
+  * **Non-Repeatable Read**
+    * 같은 데이터를 한 트랜잭션 내에서 읽었음에도 둘의 값이 다른 문제
+  
+  * **Phantom Read**
+    * 같은 조건에 대한 검색을 한 트랜잭션 내에서 읽었음에도 다시 읽을 때 이전에 존재하던 값이 없어지거나, 새로운 값이 추가로 검색되는 문제
+  
+  * **연쇄적 롤백 (Cascading Rollback)**
+    * 한 트랜잭션이 갱신한 데이터를 다른 트랜잭션이 갱신한 뒤 상황
+    * 앞선 트랜잭션을 롤백하려 할 때  이후 실행했던 트랜잭션도 롤백해야 하나 이미 해당 트랜잭션은 완료되어 롤백이 불가능한 문제
+
+</br>
+
+### **LOCK 설정 범위** 
+  * **데이터베이스**
+    * 전체 데이터베이스를 기준 Lock
+    * 1개의 세션만이 DB 데이터에 접근이 가능 
+
+  * **파일**
+    * 데이터베이스 파일을 기준 Lock 
+      * 파일 : 테이블, Row 등과 같은 실제 데이터가 Write 되는 물리적인 저장소
+    * 잘 사용되지 않음
+
+  * **테이블**
+    * 데이터베이스 테이블을 기준 Lock 
+    * 테이블의 모든 행을 업데이트 하는 등 전체 테이블에 영향을 주는 변경을 수행할 때 유용
+    * DDL (CREATE, ALTER, DROP) 구문과 함께 사용 => 'DDL Lock'
+
+  * **페이지와 블록**
+    * 파일의 일부인 페이지, 블록을 기준 Lock
+    * 잘 사용되지 않음
+
+  * **컬럼 (Column)**
+    * 테이블 컬럼을 기준 Lock
+    * Lock 설정 및 해제의 리소스가 많이 들어 잘 사용되지 않음
+
+  * **행 (Row)**
+    * 1개의 행을 기준 Lock
+    * DML (SELECT, INSERT, UPDATE, DELETE)에 대한 Lock으로서 가장 일반적으로 사용되는 Lock
+
+</br> 
+
+### **Lock 종류** 
+  * **공유 락 (Shared Lock, S)**
+    * 데이터를 변경하지 않는 읽기 명령에 주어지는 Lock
+    * 읽기 명령은 데이터 일관성에 영향을 주지 않기 때문에 동시 접근이 가능함
+
+  * **베타 락 (Exclusive Lock, X)**
+    * 데이터에 변경을 가하는 쓰기 명령에 주어지는 Lock
+    * 다른 세션이 해당 자원에 접근 (SELECT, INSERT 등)을 막음 
+    * 트랜잭션동안 유지됨
+
+  * **업데이트 락 (Update Lock)**
+    * 데이터를 수정하기 위해 베타 락을 걸기 전, 데드 락을 방지하기 위해 사용하는 Lock
+    * 일반적으로 UPDATE 쿼리의 필터 (WHERE)가 실행되는 과정에서 적용
+    * 컨버젼 데드락이 발생할 떄 이를 막기 위해 SELECT 쿼리에서도 적용될 수 있음
+
+  * **내재 락 (Intent Lock)**
+    * 사용자가 요청한 범위에 대한 락을 사용할 수 있는지 여부를 빠르게 파악하기 위해 사용하는 Lock 
+    * 공유 락과 베타 락 앞에 I 기호를 붙인 IS, IX, SIX 등 있음
+
+</br>
+
+***REF***
+- [[Database] 데이터베이스 락(Lock)의 종류와 역할](https://velog.io/@koo8624/Database-%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EB%9D%BDLock%EC%9D%98-%EC%A2%85%EB%A5%98%EC%99%80-%EC%97%AD%ED%95%A0)
+- [[DB] DB Locking 알아보기](https://cloudsoswift.github.io/post/develop/database/db-locking/)
+- [DB Lock 기초](https://shuu.tistory.com/88)
+- [IT 위키 - 데이터베이스 병행제어](https://itwiki.kr/w/%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4_%EB%B3%91%ED%96%89%EC%A0%9C%EC%96%B4#Cascade_Rollback)
+
+</br>
+
+[BACK TO HEAD](#Contents_of_Database)
+
+---
+
+## #5-1
+### Optimistic Lock / Pessimistic Lock
+
+</br>
+
+### 낙관적 Lock (Optimistic Lock)
+  * 충돌이 거의 발생하지 않을 것이라고 가정, 충돌이 발생한 경우에 대비하는 방법
+  * DB의 특징을 이용하는 것이 아닌 Application Level에서 처리
+
+### 비관적 Lock (Pessimistic Lock)
+  * 충돌이 발생할 확률이 높다고 가정, 트랜잭션 시작 전 공유 락 또는 베타 락을 미리 걸고 시작하는 방법
+  * 데이터 수정 시 바로 트랜잭션의 충돌 여부를 확인할 수 있음
+
+</br>
+
+### Optimistic Lock vs Pessimistic Lock
+  * Optimistic Lock
+    * Lock으로 인한 대기시간이 없이 동시 처리량이 높음
+    * Lock이 없어 deadlock 같은 상황 또한 발생하지 않음
+    * Transaction이 실패하는 경우 retry 매커니즘 등 구현 어려움이 있음
+  
+  * Pessimistic Lock
+    * 데이터 자체의 접근이 차단 => 무결성 향상, 구현이 쉬움
+    * 데이터 Lock 되는 시간이 길어질수록 전체적인 처리량이 저하되며 deadlock 상태에 빠질 수 있음
+
+</br>
+
+***REF***
+- [[JPA] 낙관적 락(Optimistic Lock)과 비관적 락(Pessimistic Lock)에 대해](https://mozzi-devlog.tistory.com/37)
+- [[DB] 낙관적 락 (Optimistic Lock), 비관적 락 (Pessimistic Lock)](https://donkim0122.tistory.com/119)
+- [비관적 락 (Pessismistic Lock) vs 낙관적 락 (Optimistic Lock)](https://jipang9-greedy-pot.tistory.com/161)
+- [[DB] Optimistic Locking vs Pessimistic Locking](https://breakcoding.tistory.com/403)
+
+</br>
+
+[BACK TO HEAD](#Contents_of_Database)
+
+---
+
