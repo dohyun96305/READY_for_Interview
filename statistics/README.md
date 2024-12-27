@@ -262,13 +262,13 @@
   
     * $Cov(X, Y) = Cov(Y, X)$
   
-    * $Cov(aX, bY) = ab \, Cov(X, Y)$
+    * $Cov(aX, bY) = ab Cov(X, Y)$
   
     * $Cov(\sum_{i=1}^{n}X_i, \sum_{j=1}^{n}Y_j) = \sum_{i=1}^{n}\sum_{j=1}^{n}Cov(X_i, Y_j)$
 
     * $Var(X \pm Y) = Var(X) + Var(Y) \pm 2 Cov(X, Y)$
   
-    * $Var(\sum_{i=1}^{n}X_i) = \sum_{i=1}^{n}Var(X_i) + 2 \, \sum_{i, j \, : \, i < j}Cov(X_i, X_j)$
+    * $Var(\sum_{i=1}^{n}X_i) = \sum_{i=1}^{n}Var(X_i) + 2 \sum_{i, j \, : \, i < j}Cov(X_i, X_j)$
   
     * 두 확률변수 $X$, $Y$가 독립일 때, $Cov(X, Y) = 0$을 만족
       * 두 확률변수 $X$, $Y$가 독립 => $E(X \cdot Y) = E(X)E(Y) = \mu v$
