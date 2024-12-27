@@ -242,7 +242,7 @@
 ## #6
 ### **공분산 (Covariance, Cov)**
   * $Cov(X, Y) = E[(X-E[X])(Y-E[Y])]$
-  * $E(X) = \mu, \, E(Y) = v$ 일 떄,  $Cov(X, Y) = E(X \cdot Y) - \mu v$
+  * $E(X) = \mu, \, E(Y) = v$ 일 때,  $Cov(X, Y) = E(X \cdot Y) - \mu v$
 
   </br>
 
@@ -255,7 +255,7 @@
     * $Cov(X, Y)$의 단위 = $X$, $Y$의 곱
 
   * 표본 공분산 (피어슨 상관계수에 사용)
-    * $Cov(X, Y)$ $=$ $\sum_{i}^{n}(X_i - \bar X)(Y_i - \bar Y)$ $/ \, ({n-1})$
+    * $Cov(X, Y)$ $=$ $\sum_{i}^{n}(X_i - \bar X)(Y_i - \bar Y)$ $/ ({n-1})$
 
   * **성질**    
     * $Cov(X, X) = Var(X)$
@@ -264,9 +264,9 @@
   
     * $Cov(aX, bY) = ab \, Cov(X, Y)$
   
-    * $Cov(\sum_{i=1}^{n}X_i, \, \sum_{j=1}^{n}Y_j) = \sum_{i=1}^{n}\sum_{j=1}^{n}Cov(X_i, Y_j)$
+    * $Cov(\sum_{i=1}^{n}X_i, \sum_{j=1}^{n}Y_j) = \sum_{i=1}^{n}\sum_{j=1}^{n}Cov(X_i, Y_j)$
 
-    * $Var(X \pm Y) = Var(X) + Var(Y) \pm 2 \, Cov(X, Y)$
+    * $Var(X \pm Y) = Var(X) + Var(Y) \pm 2 Cov(X, Y)$
   
     * $Var(\sum_{i=1}^{n}X_i) = \sum_{i=1}^{n}Var(X_i) + 2 \, \sum_{i, j \, : \, i < j}Cov(X_i, X_j)$
   
@@ -299,14 +299,14 @@
   
     * 두 확률변수 $X$, $Y$가 독립일 때, $Cov(X, Y) = 0$을 만족
   
-    * $Cov(X, Y) = 0$ 일 때, 두 확률변수 $X$, $Y$가 독립이 아닐 수 있음.
+    * $Cov(X, Y) = 0$ 일 때, 두 확률변수 $X$, $Y$가 독립이 아닐 수 있음
 
   * 상관계수 
     * 공분산을 표준화시켜 객관성을 확보, 단위를 갖지 않음
   
     * 상관관계가 존재한다고 인과관계가 존재하지 않음
   
-    * 인과관계가 존재한다면 상관계수가 존재함.
+    * 인과관계가 존재한다면 상관계수가 존재함
 
 </br>
 
