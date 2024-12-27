@@ -4,6 +4,7 @@
 * [샘플링 (Sampling), 리샘플링 (Resampling)의 의미 - #3](#3)
 * [가능도 (Likelihiood), 확률 (Probability)의 의미 - #4](#4)
 * [고유값 (Eigen value), 고유벡터 (Eigen Vector) - #5](#5)
+* [공분산 (Covariance), 상관계수 (Correlation) - #6](#6)
 ---
 
 ## #1 
@@ -232,6 +233,88 @@
 - [[선형대수학 #3] 고유값과 고유벡터 (eigenvalue & eigenvector)](https://darkpgmr.tistory.com/105)
 - [머신러닝에서 고유값의 활용](https://brunch.co.kr/@chris-song/104)
   
+</br>
+
+[BACK TO HEAD](#Contents_of_Statistics)
+
+---
+
+## #6
+### **공분산 (Covariance, Cov)**
+  * $Cov(X, Y) = E[(X-E[X])(Y-E[Y])]$
+  * $E(X) = \mu, \, E(Y) = v$ 일 떄,  $Cov(X, Y) = E(X \cdot Y) - \mu v$
+
+  </br>
+
+  * **2개의 확률변수의 선형 관계 및 관련성**를 나타내는 값 
+    * 한 확률변수의 값이 상승하는 경향을 보일 때  
+      * 다른 확률변수의 값이 상승하는 경향을 보인다면 => '양'의 공분산 값
+      * 다른 확률변수의 값이 하강하는 경향을 보인다면 => '음'의 공분산 값
+  
+  * 측정 단위의 크기에 따라 값이 달라짐 
+    * $Cov(X, Y)$의 단위 = $X$, $Y$의 곱
+
+  * 표본 공분산 (피어슨 상관계수에 사용)
+    * $Cov(X, Y)$ $=$ $\sum_{i}^{n}(X_i - \bar X)(Y_i - \bar Y)$ $/ \, ({n-1})$
+
+  * **성질**    
+    * $Cov(X, X) = Var(X)$
+  
+    * $Cov(X, Y) = Cov(Y, X)$
+  
+    * $Cov(aX, bY) = ab \, Cov(X, Y)$
+  
+    * $Cov(\sum_{i=1}^{n}X_i, \, \sum_{j=1}^{n}Y_j) = \sum_{i=1}^{n}\sum_{j=1}^{n}Cov(X_i, Y_j)$
+
+    * $Var(X \pm Y) = Var(X) + Var(Y) \pm 2 \, Cov(X, Y)$
+  
+    * $Var(\sum_{i=1}^{n}X_i) = \sum_{i=1}^{n}Var(X_i) + 2 \, \sum_{i, j \, : \, i < j}Cov(X_i, X_j)$
+  
+    * 두 확률변수 $X$, $Y$가 독립일 때, $Cov(X, Y) = 0$을 만족
+      * 두 확률변수 $X$, $Y$가 독립 => $E(X \cdot Y) = E(X)E(Y) = \mu v$
+      * $Cov(X, Y) = E(X \cdot Y) - \mu v =  \mu v -  \mu v = 0$ 
+
+</br>
+
+### 상관계수 (Correlation, Corr)
+  * **피어슨 상관계수**$\,$ $r_{XY} = \frac{\sum_{i=1}^{n}(X_i - \bar X)(Y_i - \bar Y)} {\sqrt{\sum_{i=1}^{n}(X_i - \bar X)^2} \sqrt{\sum_{i=1}^{n}(Y_i - \bar Y)^2} } = \frac{Cov(X, Y)}{\sigma_X \sigma_Y}$
+    * '연속형' 데이터에 적합
+  
+  * **스피어만 상관계수**$\,$ $\rho = \frac{\sum_{i=1}^{n}(x_i - \bar x)(y_i - \bar y)} {\sqrt{\sum_{i=1}^{n}(x_i - \bar x)^2} \sqrt{\sum_{i=1}^{n}(y_i - \bar y)^2} }$
+    * $x_i$ = X에서의 i번째 데이터 순위, $y_i$ = Y에서의 i번째 데이터 순위 
+    *  $d_i = x_i - y_i$ 일 때, $\rho = 1 - \frac{6 \sum d_i^2}{n(n^2 - 1)}$
+    *  '이산형', '순서형' 데이터에 적합
+
+  * **두 변수 사이의 통계적 관계를 표현**하기 위해 특정한 상관 관계의 정도를 수치적으로 나타낸 계수
+  
+  * 값의 범위가 -1, +1 사이에 속함 
+    * $\pm 1$은 가장 센 잠재적 일치, 0은 가장 센 잠재적 불일치를 나타냄
+
+</br>
+
+### 공분산 vs 상관계수
+  * 공분산 
+    * 두 확률변수 $X$, $Y$의 측정 단위와 범위에 영향을 받음 
+      * 두 확률변수 $X$, $Y$의 관계의 방향만 알 수 있음
+  
+    * 두 확률변수 $X$, $Y$가 독립일 때, $Cov(X, Y) = 0$을 만족
+  
+    * $Cov(X, Y) = 0$ 일 때, 두 확률변수 $X$, $Y$가 독립이 아닐 수 있음.
+
+  * 상관계수 
+    * 공분산을 표준화시켜 객관성을 확보, 단위를 갖지 않음
+  
+    * 상관관계가 존재한다고 인과관계가 존재하지 않음
+  
+    * 인과관계가 존재한다면 상관계수가 존재함.
+
+</br>
+
+***REF***
+- [위키백과 - 공분산](https://ko.wikipedia.org/wiki/%EA%B3%B5%EB%B6%84%EC%82%B0)
+- [위키백과 - 상관계수](https://ko.wikipedia.org/wiki/%EC%83%81%EA%B4%80%EA%B3%84%EC%88%98)
+- [위키독스 - 공분산, 상관계수](https://wikidocs.net/202424)
+
 </br>
 
 [BACK TO HEAD](#Contents_of_Statistics)
