@@ -9,6 +9,9 @@
 * [B-tree, B+tree - #4](#4)
 * [DB Locking - #5](#5)
   * [Optimistic Lock / Pessimistic Lock - #5-1](#5-1)
+*  [Transaction, ACID 원칙 - #6](#6)
+   * [트랜잭션 격리 수준 (Isolation Level) - #6-1](#6-1)
+
 ---
 
 ## #1 
@@ -350,7 +353,7 @@
     * 리프 노드에만 데이터가 저장되기 때문에 메모리 효율이 상대적으로  좋음
     * 리프 노드에 '연결성'을 나타내는 데이터가 추가적으로 관리되어야 함 
       * => 데이터 생성 및 수정 삭제가 일어날 때 성능이 비효율적임.
-      * 
+  
 </br>
 
 ***REF***
@@ -463,8 +466,6 @@
 ## #5-1
 ### Optimistic Lock / Pessimistic Lock
 
-</br>
-
 ### 낙관적 Lock (Optimistic Lock)
   * 충돌이 거의 발생하지 않을 것이라고 가정, 충돌이 발생한 경우에 대비하는 방법
   * DB의 특징을 이용하는 것이 아닌 Application Level에서 처리
@@ -499,3 +500,107 @@
 
 ---
 
+## #6
+### Transaction, ACID 원칙 
+
+### 트랜잭션 (Transaction)
+  * 'DB 상태를 변환시키는 하나의 논리적 기능'을 수행하기 위한 작업의 단위 혹은 일련의 연산 
+
+  * 트랜잭션의 연산 
+    * **COMMIT** 
+      * 트랜잭션이 성공적으로 수행되었음을 선언하는 연산
+  
+    * **ROLLBACK** 
+      * 트랜잭션 수행이 실패했음을 선언하고 작업을 취소하는 연산
+
+### ACID 원칙 (트랜잭션의 4가지 특성)
+  * **원자성 (Atomicity)**
+    * 트랜잭션의 연산은 DB에 전부 반영되거나 전부 반영되지 않아야한다 (All or Nothing)
+    * 트랜잭션 내 모든 명령은 모두 완벽히 수행한 후 DB에 반영되어야함
+    * 어느 하나의 명령이라도 오류가 발생하면 트랜잭션 전부가 취소되어야 함
+
+  * **일관성 (Consistency)**
+    * 트랜잭션의 작업 처리 결과는 항상 일관성 있어야 한다.
+    * 트랜잭션이 성공적으로 종료되면 언제나 '데이터 무결성'을 보장
+    * 고정요소에 대해 트랜잭션 수행 전과 수행 완료 후의 상태가 같아야함
+
+  * **독립성 (Isolation)**
+    * 하나의 트랜잭션이 실행하고 있는 도중, 다른 트랜잭션이 간섭할 수 없음
+    * 수행중인 트랜잭션이 완전히 완료되기 전까지 다른 트랜잭션에서 수행 결과를 참조할 수 없음
+
+  * **영속성 (Durability)**
+    * 성공적으로 완료된 트랜잭션의 결과는 시스템이 고장나도 영구적으로 반영되어야함.
+
+</br>
+
+***REF***
+- [[DB] 트랜잭션 (Transaction) with 4가지 특성](https://jindevelopetravel0919.tistory.com/48)
+- [[Database] 트랜잭션 정리](https://velog.io/@shasha/Database-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98-%EC%A0%95%EB%A6%AC)
+
+</br>
+
+[BACK TO HEAD](#Contents_of_Database)
+
+---
+
+## #6-1
+### 트랜잭션 격리 수준 (Isolation Level)
+
+  * 동시에 여러 트랜잭션이 처리될 때, 트랜잭션끼리 얼마나 독립되어야 하는가에 대한 수준 
+  * 트랜잭션의 ACID 원칙 중 독립성 (Isolation)에 대한 수준
+  * 'DB 내 트랜잭션의 처리 속도'와 '데이터 정확성'에 대한 Trade-Off
+
+### 트랜잭션 격리 수준 4단계
+  * **Read Uncommitted**
+    * 한 트랜잭션의 내용이 COMMIT 혹은 ROLLBACK 연산과 상관없이 다른 트랜잭션에서 조회가 가능한 수준
+    * SELECT문을 실행하는 동안 Shared Lock이 걸리지 않음 
+  
+  * **Read Committed**
+    * 한 트랜잭션의 내용이 COMMIT되어야만 다른 트랜잭션에서 조회가 가능한 수준 
+    * SELECT문을 실행할 때, Shared Lock이 걸림
+    * SELECT문 조회시 실제 테이블 값이 아닌 Undo 영역의 백업된 레코드 값을 읽어옴 
+    * 대부분의 RDMS에서 기본적으로 사용하는 수준 
+   
+  * **Repeatable Read**
+    * 한 트랜잭션이 시작되기 전 COMMIT된 내용에 대해서만 조회가 가능한 수준 
+    * 한 트랜잭션이 완료될 때까지 SELECT문이 사용하는 모든 데이터에 Shared Lock이 걸림 
+    * 트랜잭션의 실행시간이 길어질수록 계속 멀티 버전을 관리해야함 
+    * MySQL InnoDB 스토리지 엔진 기본 격리수준 
+
+  * **Serializable** 
+    * 가장 단순하면서 엄격한 격리 수준, 성능적으로 동시 처리 성능이 가장 낮음
+    * 트랜잭션들이 동시에 일어나지 않고 순자적으로 진행
+
+</br>
+
+### 트랜잭션 상호작용에 따른 문제점 
+  * **Dirty Read**
+    * 아직 COMMIT 되지 않은 트랜잭션의 데이터를 읽음
+    * Read Uncommitted 수준에서 발생 
+
+  * **Non_repeatable Read**
+    * 한 트랜잭션 내 같은 행에 대해 2번 이상 조회했을 때, 결과가 다른 상황
+      * 데이터의 수정 (UPDATE 쿼리)가 발생한 경우 
+    * Read Uncommitted, Read Committed 수준에서 발생
+
+  * **Phantom Read**
+    * 한 트랜잭션에서 같은 쿼리로 2번 이상 조회했을 때, 결과가 다른 상황
+      * 데이터의 삽입/삭제 (INSERT/DELETE 쿼리)가 발생한 경우
+    * Serializable 제외 모든 격리 수준에서 발생
+    * MySQL InnoDB에서는 발생하지 않음 
+      * => next key lock (record lock + gap lock) 사용 
+
+</br>
+
+***REF***
+- [[DB] 트랜잭션 격리수준 (Isolation Level) 에 쉽게 이해하기](https://tlatmsrud.tistory.com/118)
+- [Isolation Level이란?](https://akasai.space/db/about_isolation/)
+- [트랜잭션 격리 수준과 격리 수준에 따른 문제점](https://leeeeeyeon-dev.tistory.com/121)
+- [[MySQL] 트랜잭션의 격리 수준(Isolation Level)에 대해 쉽고 완벽하게 이해하기
+](https://mangkyu.tistory.com/299)
+
+</br>
+
+[BACK TO HEAD](#Contents_of_Database)
+
+---
