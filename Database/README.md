@@ -11,6 +11,7 @@
   * [Optimistic Lock / Pessimistic Lock - #5-1](#5-1)
 *  [Transaction, ACID 원칙 - #6](#6)
    * [트랜잭션 격리 수준 (Isolation Level) - #6-1](#6-1)
+   * [MySQL에서 ACID 원칙 보장하는 방법 - #6-2](#6-2)
 
 ---
 
@@ -569,6 +570,7 @@
 
   * **Serializable** 
     * 가장 단순하면서 엄격한 격리 수준, 성능적으로 동시 처리 성능이 가장 낮음
+    * 한 트랜잭션에서 읽고 쓰는 데이터에 대해 다른 트랜잭션에서는 접근 불가
     * 트랜잭션들이 동시에 일어나지 않고 순자적으로 진행
 
 </br>
@@ -598,6 +600,76 @@
 - [트랜잭션 격리 수준과 격리 수준에 따른 문제점](https://leeeeeyeon-dev.tistory.com/121)
 - [[MySQL] 트랜잭션의 격리 수준(Isolation Level)에 대해 쉽고 완벽하게 이해하기
 ](https://mangkyu.tistory.com/299)
+
+</br>
+
+[BACK TO HEAD](#Contents_of_Database)
+
+---
+
+## #6-2
+### MySQL에서 ACID 원칙을 보장하는 방법
+
+  * **원자성 (Atomicity)**
+    * MVCC (Mulit Version Concurrency Control)
+      * '다중 버전 동시성 제어' 
+      * 여러 트랜잭션이 동시에 같은 데이터에 접근할 때, 데이터의 일관성과 동시성을 보장하는 방식
+      * 잠금 (Locking) 없이 일관된 읽기를 제공 
+        * InnoDB 스토리지 엔진에서 언두 로그 (Undo Log)을 활용해 구현 
+
+      1. 갱신 요청이 들어왔을 때, 갱신 이전 값을 Undo Log에 복사 => '스냅샷 생성'
+      2. 트랜잭션이 실패했을 때, Undo Log에 백업되어 있는 데이터를 Inno DB 버퍼 풀로 복구 및 ROLLBACK
+      3. 트랜잭션에 성공 이후 COMMIT 되어도 Undo Log를 바로 삭제하지는 않음 (관련 트랜잭션이 있을 수 있음)
+
+  * **일관성 (Consistency)** 
+    * 제약 조건 (MySQL)
+      * unique 제약 조건
+        * 해당 필드는 중복된 값을 가질 수 없음
+      * primary key 제약 조건
+        * not null + unique 
+        * 해당 필드는 Null 값을 가질 수 없고 중복된 값을 가질 수 없음
+      * foreign key 제약 조건
+        * '테이블 간 연결 고리', 기준이 되는 테이블의 필드 값을 참조
+        * 참조되는 테이블의 필드는 unique 혹은 primary key 제약 조건을 가져야함
+      * not null 제약 조건
+        * 해당 필드는 Null 값을 가질 수 없음
+      * default 제약 조건 
+        * 해당 필드는 값이 전달되지 않을 때, default, 기본 값을 가짐
+  
+    * 위 제약 조건들을 트랜잭션 수행 전, 후 검사 
+      * 하나라도 만족하지 않는다면 오류 반환 및 트랜잭션 ROLLBACK
+    
+  * **독립성 (Isolation)**
+    * [트랜잭션 격리 수준 (Isolation Level)](#6-1)을 통해 구현
+    * 개발자가 직접 트랜잭션 격리 수준을 제어할 수 있음 => 제일 유연성 높은 특성 
+    
+  * **영속성 (Durability)**
+    * **WAL (Write-Ahead Logging)**
+      * 로그 선행 기입  
+      * 모든 수정을 적용 하기 전, 먼저 로그에 기록하는 방식   
+
+      * WAL을 통해 DB 등 오류가 발생했을 때, Log를 활용해 복구 및 작업할 수 있음
+        1. 마지막 체크포인트 시점부터 최근 Log까지 모든 Log를 탐색
+        2. 트랜잭션들의 복구 여부 분석
+        3. 복구를 시잭해야하는 시점부터 장애가 발생한 시점 직전까지 모든 Log를 REDO => '트랜잭션 재반영'
+        4. 로그를 시간 내림차순으로 탐색, 필요에 따라 Log UNDO => '트랜잭션 롤백'  
+  
+      * REDO, UNDO 복구의 필요성을 판단할 때, Log 레코드의 'LSN 식별자'사용
+        * 모든 페이지는 해당 페이지를 마지막으로 갱신한 로그의 식별자를 가짐 
+          * page LSN < Log LSN => 해당 페이지는 반드시 복구되어야 함
+          * page LSN >= Log LSN =>  해당 페이지는 복구될 필요 없음 
+            * 페이지가 나중 Log로 이미 갱신된 상태
+
+      * Log 기록 과정에서 성능저하가 발생 
+        * COMMIT 성능을 위해 일부 DBMS는 영속성을 일부 포기하는 옵션 제공 
+        * MySQL InnoDB의 경우, innodb_flush_log_at_trx_commit 옵션 제공 
+
+</br>
+
+***REF***
+- [[MySQL] 트랜잭션, ACID와 MySQL이 트랜잭션의 ACID를 보장하는 방법들](https://hogwart-scholars.tistory.com/entry/MySQL-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98-ACID%EC%99%80-MySQL%EC%9D%B4-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98%EC%9D%98-ACID%EB%A5%BC-%EB%B3%B4%EC%9E%A5%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95%EB%93%A4)
+- [WAL (Write-Ahead Logging)](https://nays111.tistory.com/12)
+- [[MySQL]제약조건(Constraint)개념 및 종류](https://velog.io/@jyyoun1022/MySQL%EC%A0%9C%EC%95%BD%EC%A1%B0%EA%B1%B4Constraint%EA%B0%9C%EB%85%90-%EB%B0%8F-%EC%A2%85%EB%A5%98)
 
 </br>
 
