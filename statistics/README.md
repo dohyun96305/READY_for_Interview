@@ -5,6 +5,7 @@
 * [가능도 (Likelihiood), 확률 (Probability)의 의미 - #4](#4)
 * [고유값 (Eigen value), 고유벡터 (Eigen Vector) - #5](#5)
 * [공분산 (Covariance), 상관계수 (Correlation) - #6](#6)
+* [통계학적 엔트로피 (Entropy), Information Gain - #7](#7)
 ---
 
 ## #1 
@@ -316,6 +317,42 @@
 - [위키백과 - 공분산](https://ko.wikipedia.org/wiki/%EA%B3%B5%EB%B6%84%EC%82%B0)
 - [위키백과 - 상관계수](https://ko.wikipedia.org/wiki/%EC%83%81%EA%B4%80%EA%B3%84%EC%88%98)
 - [위키독스 - 공분산, 상관계수](https://wikidocs.net/202424)
+
+</br>
+
+[BACK TO HEAD](#Contents_of_Statistics)
+
+---
+
+## #7
+### 통계학적 엔트로피 (Entropy)
+
+  * **확률분포가 가지는 정보의 확신 혹은 정보량**을 수치로 표현한 값
+    * 확률분포에서 특정 값이 나올 확률이 높아지고 나머지 값이 나올 확률이 낮은 경우 => '엔트로피가 작음'
+    * 확률분포에서 여러가지 값이 나올 확률이 대부분 비슷한 경우 => '엔트로피가 큼'
+  
+  * **확률분포의 모양에 대한 특성 값**중 하나 
+    * 확률 또는 확률밀도가 특정 값에 몰려있는 경우 => '엔트로피가 작음'
+    * 확률 또는 확률밀도가 여러 값에 고루 퍼져 있는 경우 => '엔트로피가 큼' 
+
+  </br>
+
+  * 확률변수 $Y$가 이산확률변수 -> $H[Y] = - \sum_{k=1}^{K}p(y_k)log_2p(y_k)$ 
+    * $K$ = $X$가 가질 수 있는 클래스 수
+    * $p(y)$ = 확률질량함수
+  
+  </br>
+  
+  * 확률변수 $Y$가 연속확률변수 -> $H[Y] = - \int_{-\infty}^{\infty}p(y)log_2p(y)dy$
+    * $p(y)$ = 확률밀도함수 
+  
+  </br>
+
+  * $p(y) = 0$인 경우, $\lim_{p->0} plog_2p = 0$을 이용 
+    * $0 * log_20$이 계산이 불가능함 => 극한값 '0'으로 수렴 
+
+***REF***
+- [데이터 사이언스 스쿨 - 엔트로피](https://datascienceschool.net/02%20mathematics/10.01%20%EC%97%94%ED%8A%B8%EB%A1%9C%ED%94%BC.html)
 
 </br>
 
