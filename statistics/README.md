@@ -325,7 +325,7 @@
 ---
 
 ## #7
-### 통계학적 엔트로피 (Entropy)
+### **통계학적 엔트로피 (Entropy)**
 
   * **확률분포가 가지는 정보의 확신 혹은 정보량**을 수치로 표현한 값
     * 확률분포에서 특정 값이 나올 확률이 높아지고 나머지 값이 나올 확률이 낮은 경우 => '엔트로피가 작음'
@@ -335,6 +335,8 @@
     * 확률 또는 확률밀도가 특정 값에 몰려있는 경우 => '엔트로피가 작음'
     * 확률 또는 확률밀도가 여러 값에 고루 퍼져 있는 경우 => '엔트로피가 큼' 
 
+  * 일반적으로 엔트로피 내 $log$ 계산 시 $log_2$ 사용 
+  
   </br>
 
   * 확률변수 $Y$가 이산확률변수 -> $H[Y] = - \sum_{k=1}^{K}p(y_k)log_2p(y_k)$ 
@@ -348,11 +350,31 @@
   
   </br>
 
-  * $p(y) = 0$인 경우, $\lim_{p->0} plog_2p = 0$을 이용 
+  * $p(y) = 0$인 경우, $\lim_{p \rightarrow 0} plog_2p = 0$을 이용 
     * $0 * log_20$이 계산이 불가능함 => 극한값 '0'으로 수렴 
+
+</br>
+
+### **Information Gain** 
+  * 확률분포의 변화에 따른 엔트로피 값의 변화량 
+  * 기존 확률분포 $D$에서 특정 Attribute $A$를 통해 나눴을 때의 엔트로피의 변화량
+
+  * $Gain(A) = H(D) - H_A(D)$
+    * $H_A(D) = \sum_{j=1}^{v} \frac{D_j}{D} * H(D_j)$
+      * $A$ = 기존 확률분포의 split에 기준이 되는 특정 Attribute
+      * $v$ = 특정 Attribute $A$로 나눴을 때의 partition 개수
+
+  * $Gain(A)$의 값이 최대가 되는 Atrribute A 선정 
+    * => $H_A(D)$ 값이 최소가 되는 값 
+    * => 기존 확률분포를 가장 확실하게 나눠 분류의 불확실성을 감소시킬 수 있는 Attribute $A$ 선정 
+
+
+</br>
 
 ***REF***
 - [데이터 사이언스 스쿨 - 엔트로피](https://datascienceschool.net/02%20mathematics/10.01%20%EC%97%94%ED%8A%B8%EB%A1%9C%ED%94%BC.html)
+- [정보량과 엔트로피](https://lcyking.tistory.com/entry/%ED%86%B5%EA%B3%84-%EC%A0%95%EB%B3%B4%EB%9F%89%EA%B3%BC-%EC%97%94%ED%8A%B8%EB%A1%9C%ED%94%BC)
+- [[Decision Tree] Information Gain](https://gofo-coding.tistory.com/entry/Decision-Tree-Information-Gain-1)
 
 </br>
 
